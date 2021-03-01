@@ -26,7 +26,7 @@ void isAbleToOpen(char* filename){
 int main() {
     printID();
     isAbleToOpen("file.txt");
-    if(setuid(getuid()) == SETUIDFAIL){
+    if(seteuid(getuid()) == SETUIDFAIL){
         perror("Setuid did not succeed");
         exit(EXIT_FAILURE);
     }
