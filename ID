@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+#define SETUIDFAIL -1
+
+void printID(){
+    printf("Real ID : %u \n", getuid());
+    printf("Effective ID : %u \n", geteuid());
+    //These functions are always successful
+}
+
+void isAbleToOpen(char* filename){
+    FILE * file;
+    file = fopen(filename, "r");
+    if(file == NULL){
+        perror("File was not opened");
+    } else {
+        if(fclose(file) == EOF){
+            perror("File can not be closed");
+        }
+        printf("File was opened and closed successfully \n");
+    }
+}
+
+int main() {
+    printID();
+    isAbleToOpen("file.txt");
+    if(setuid(getuid()) == SETUIDFAIL){
+        perror("Setuid did not succeed");
+        exit(EXIT_FAILURE);
+    }
+    printID();
+    isAbleToOpen("file.txt");
+    return 0;
+}
