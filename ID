@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#define SETUIDFAIL -1
+#define SETEUIDFAIL -1
 
 void printID(){
     printf("Real ID : %u \n", getuid());
@@ -26,7 +26,7 @@ void isAbleToOpen(char* filename){
 int main() {
     printID();
     isAbleToOpen("file.txt");
-    if(seteuid(getuid()) == SETUIDFAIL){
+    if(seteuid(getuid()) == SETEUIDFAIL){
         perror("Setuid did not succeed");
         exit(EXIT_FAILURE);
     }
